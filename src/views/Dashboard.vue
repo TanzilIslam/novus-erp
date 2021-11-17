@@ -66,15 +66,12 @@
       </v-btn>
     </v-app-bar>
     <v-container>
-      <v-card>
+      <div class="mx-5 my-5">
         <v-fade-transition>
           <router-view :key="$route.fullPath" />
         </v-fade-transition>
-      </v-card>
+      </div>
     </v-container>
-    <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
   </v-app>
 </template>
 
