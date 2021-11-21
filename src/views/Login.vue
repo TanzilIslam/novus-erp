@@ -98,7 +98,7 @@ export default {
         });
         localStorage.setItem("token", "token");
         console.log(userInfo);
-        this.$router.push("/overview");
+        this.$router.push("/expense");
         // this.$api
         //   .post(this.$endpoint.LOGIN, this.employee)
         //   .then((r) => {

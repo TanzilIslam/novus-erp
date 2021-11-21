@@ -97,40 +97,40 @@ export default {
       fixed: false,
       items: [],
       links: [
-        {
-          to: "/overview",
-          icon: "mdi-view-dashboard",
-          text: "Dashboard",
-          active: false,
-        },
+        // {
+        //   to: "/overview",
+        //   icon: "mdi-view-dashboard",
+        //   text: "Dashboard",
+        //   active: false,
+        // },
         {
           to: "/expense",
           icon: "mdi-cash-multiple",
           text: "Expense",
           active: false,
         },
-        {
-          icon: "mdi-tennis",
-          text: "Players",
-          active: false,
-          subLinks: [
-            {
-              text: "Players list",
-              to: "/new-connection",
-              icon: "mdi-tennis",
-            },
-            {
-              text: "Import WTA Players",
-              to: "/players/import",
-              icon: "mdi-tennis",
-            },
-          ],
-        },
-        {
-          to: "/tournaments",
-          icon: "mdi-trophy",
-          text: "Tournaments",
-        },
+        // {
+        //   icon: "mdi-tennis",
+        //   text: "Players",
+        //   active: false,
+        //   subLinks: [
+        //     {
+        //       text: "Players list",
+        //       to: "/new-connection",
+        //       icon: "mdi-tennis",
+        //     },
+        //     {
+        //       text: "Import WTA Players",
+        //       to: "/players/import",
+        //       icon: "mdi-tennis",
+        //     },
+        //   ],
+        // },
+        // {
+        //   to: "/tournaments",
+        //   icon: "mdi-trophy",
+        //   text: "Tournaments",
+        // },
       ],
       itemsAdmin: [
         {
