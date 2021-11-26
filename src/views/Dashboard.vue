@@ -109,6 +109,12 @@ export default {
           text: "Expense",
           active: false,
         },
+        {
+          to: "/bill",
+          icon: "mdi-air-filter",
+          text: "Bill",
+          active: false,
+        },
         // {
         //   icon: "mdi-tennis",
         //   text: "Players",

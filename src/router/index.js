@@ -20,11 +20,9 @@ const routes = [
           import(/* webpackChunkName: "expense" */ "../views/Expense.vue"),
       },
       {
-        path: "/new-connection",
+        path: "/bill",
         component: () =>
-          import(
-            /* webpackChunkName: "new-connection" */ "../views/NewConnection.vue"
-          ),
+          import(/* webpackChunkName: "new-connection" */ "../views/Bill.vue"),
       },
     ],
     meta: { requiresAuth: true },

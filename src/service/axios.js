@@ -21,8 +21,9 @@ Vue.prototype.$api = api;
 Vue.prototype.$endpoint = {
   GET_ALL_EXPENSE: "mx_get",
   GET_ALL_EXPENSE_LIST: "list_profile",
-  GET_EXPENSE: "/query?search=",
-  REGISTER: "/employee/register",
+  GET_EXPENSE: "query?search=",
+  GET_Bill: "m_bill_api",
+  SEARCH: "query?search=",
   GET_ALL_EMPLOYEES: "/employee",
   DELETE_EMPLOYEE: "/employee/delete",
   UPDATE_EMPLOYEE: "/employee/update",

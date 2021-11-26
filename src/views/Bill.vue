@@ -2,25 +2,24 @@
   <div>
     <v-card class="">
       <v-card-title>
-        All Expense
+        Bill
         <v-spacer></v-spacer>
-        <v-btn color="primary"><v-icon>mdi-plus</v-icon> Add Expense</v-btn>
+        <v-btn color="primary"><v-icon>mdi-plus</v-icon> Add Bill</v-btn>
       </v-card-title>
-      <div class="d-flex px-4">
+      <div class="d-flex px-4 mb-4">
         <v-autocomplete
-          v-model="filterValue"
-          :items="expenseList"
+          v-model="filterMonth"
+          :items="monthList"
           solo
           dense
           chips
           small-chips
-          label="Filter Expense"
+          label="Filter By Month"
           color="primary"
           class="mr-4 mb-4"
-          item-text="cost_name"
           clearable
           deletable-chips
-          @change="selectExpense"
+          @change="selectMonth"
         ></v-autocomplete>
         <v-text-field
           v-model="search"
@@ -78,27 +77,50 @@ export default {
       next: null,
       previous: null,
       search: "",
-      filterValue: null,
+      filterMonth: null,
 
       headers: [
         {
-          text: "Date",
+          text: "User ID",
           align: "start",
-          value: "date",
+          value: "user_id",
         },
-        { text: "Type", value: "cost_profile" },
-        { text: "Cost", value: "cost" },
+        {
+          text: "Payment Method",
+          value: "payment_method",
+        },
+        {
+          text: "Payment Status",
+          value: "payment_status",
+        },
+        { text: "Package Name", value: "package_name" },
+        { text: "Package Price", value: "package_price" },
+        { text: "Date", value: "date" },
+        { text: "Month", value: "month" },
         { text: "Description", value: "description" },
+
         { text: "Actions", value: "actions", sortable: false },
       ],
       items: [],
       clone_items: [],
-      expenseList: [],
+      monthList: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ],
     };
   },
   async created() {
-    await this.getData(this.$endpoint.GET_ALL_EXPENSE);
-    await this.getDataOfExpenseList(this.$endpoint.GET_ALL_EXPENSE_LIST);
+    await this.getData(this.$endpoint.GET_Bill);
   },
   methods: {
     async getData(url) {
@@ -109,22 +131,25 @@ export default {
         .get(url)
         .then((r) => {
           if (r.data.count > 0) {
-            let z = r.data.count % 50;
+            let items_per_page = r.data.results.length;
+            let z = r.data.count % items_per_page;
             if (z !== 0) {
               let y = r.data.count - z;
-              let x = y / 50;
+              let x = y / items_per_page;
               let w = x + 1;
               self.paginationLength = w;
             } else if (z == 0) {
-              self.paginationLength = r.data.count / 50;
+              self.paginationLength = r.data.count / items_per_page;
             }
           }
           self.next = r.data.next;
           self.previous = r.data.previous;
-          console.log(self.next, self.previous);
           r.data.results.forEach((element) => {
-            element.cost_profile = element.cost_profile.cost_name;
-            element.date = moment(element.date).format("DD-MM-YYYY");
+            element.payment_method = element.payment_method.methosd;
+            element.package_name = element.Pack_name.pkgnamebill;
+            element.package_price = element.pkg.pkg_list;
+            element.month = element.month.month;
+            element.date = moment(element.pay_date).format("DD-MM-YYYY");
             items.push(element);
           });
           self.clone_items = items;
@@ -148,12 +173,12 @@ export default {
           this.$emitter.publish("TOAST", { msg: e, error: true });
         });
     },
-    async selectExpense() {
-      if (this.filterValue == null) {
-        await this.getData(this.$endpoint.GET_ALL_EXPENSE);
+    async selectMonth() {
+      if (this.filterMonth == null) {
+        await this.getData(this.$endpoint.GET_Bill);
         this.page = 1;
       } else {
-        await this.getData(this.$endpoint.GET_EXPENSE + this.filterValue);
+        await this.getData(this.$endpoint.SEARCH + this.filterMonth);
         this.page = 1;
       }
     },
@@ -164,9 +189,9 @@ export default {
     deleteItem(item) {
       console.log(item);
     },
-    nextPagination() {
+    async nextPagination() {
       if (this.next !== null) {
-        this.getData(this.next);
+        await this.getData(this.next);
       }
     },
     previousPagination() {
@@ -176,7 +201,7 @@ export default {
     },
     clickPagination() {
       if (this.filterValue == null) {
-        this.getData(this.$endpoint.GET_ALL_EXPENSE + "?page=" + this.page);
+        this.getData(this.$endpoint.GET_Bill + "?page=" + this.page);
       } else {
         let query = this.filterValue.replace(" ", "+");
         this.getData("query?page=" + this.page + "&search=" + query);
